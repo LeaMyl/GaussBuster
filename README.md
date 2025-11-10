@@ -1,97 +1,74 @@
-# GaussBuster: Audio Enhancement Framework
+# GaussBuster: Speech/Voice Enhancement Framework
 
 ## Overview
-GaussBuster is an audio enhancement framework designed to improve the quality of degraded audio recordings using various denoising and restoration techniques. The project uses the ESC-50 dataset (Environmental Sound Classification) as a diverse testing ground for audio enhancement algorithms.
+GaussBuster is a speech and voice enhancement framework focused on improving the listenability and perceptual quality of spoken audio. The repository contains tools and notebooks to prepare speech datasets (small LibriSpeech subsets, VoxCeleb preparations) and evaluate enhancement results using objective speech-quality metrics.
 
 ## Project Goals
-- Develop robust audio enhancement techniques for various types of degradation
-- Test enhancement methods across different environmental sounds and noise conditions
-- Provide metrics-based evaluation of audio quality improvement
-- Create a pipeline for processing and restoring degraded audio files
+- Improve speech listenability and intelligibility for degraded recordings.
+- Develop and evaluate denoising/restoration methods specifically for speech.
+- Provide a reproducible pipeline for preparing speech datasets and generating a high-quality subset for model training or evaluation.
+- Evaluate outputs using perceptual and intelligibility metrics.
 
 ## Features
-- Support for multiple types of audio degradation:
-  - Environmental noise
-  - Old recording artifacts
-  - Low-quality compression artifacts
-  - Background noise
-  - Reverberation
-- Quality metrics evaluation:
-  - PESQ (Perceptual Evaluation of Speech Quality)
-  - STOI (Short-Time Objective Intelligibility)
-  - SNR (Signal-to-Noise Ratio)
-- Batch processing capabilities
-- Support for various audio formats
+- Targeted speech enhancement algorithms (denoising, dereverberation, artifact removal).
+- Dataset preparation notebooks and scripts for speech corpora (e.g., LibriSpeech subset, VoxCeleb preprocessing).
+- Quality metrics evaluation: PESQ, STOI, and SNR.
+- Batch processing and metadata generation for selected high-quality speech samples.
 
 ## Dataset
-The project uses the ESC-50 dataset which provides:
-- 2000 environmental recordings (5 seconds each)
-- 50 classes of sounds
-- High-quality source material for testing enhancement algorithms
-- Diverse sound types including:
-  - Natural sounds
-  - Human non-speech sounds
-  - Domestic sounds
-  - Urban noises
+This project focuses on speech datasets rather than environmental sounds. Example data sources you may see in the repo or notebooks:
+- LibriSpeech (small subsets used for quick experiments)
+- VoxCeleb (preparation scripts/notebooks exist to extract and evaluate speech samples)
+
+The included notebook `prepare_metadata_dataset.ipynb` demonstrates downloading or sampling speech corpora, extracting WAV files, computing PESQ/STOI/SNR, and saving a metadata CSV plus a `high_quality_audio/` folder.
 
 ## Installation
-```bash
-# Create and activate virtual environment
-python -m venv .venv
-.venv\Scripts\activate
+Create and activate a virtual environment and install required Python packages. A minimal set of packages used by the notebooks:
 
-# Install dependencies
+```powershell
+# Create and activate virtual environment
+python -m venv .venv; .venv\Scripts\Activate.ps1
+
+# Install common requirements (adjust as needed)
 pip install -r requirements.txt
 ```
 
+If you use the notebooks directly, the cells install packages such as `torchaudio`, `librosa`, `pesq`, `pystoi`, `pandas`, `tqdm`, and `soundfile`.
+
 ## Usage
-1. Prepare the dataset:
-```python
-python prepare_dataset.py
-```
+1) Prepare a speech dataset (example: run the notebook to sample LibriSpeech or prepare VoxCeleb-derived audio):
 
-2. Process audio files:
-```python
-python enhance_audio.py --input_dir "path/to/input" --output_dir "path/to/output"
-```
+Open `prepare_metadata_dataset.ipynb` with Jupyter/VS Code and run the cells. The notebook will:
+- download or sample a speech corpus (or use an existing local copy),
+- resample and save WAV files,
+- compute PESQ/STOI/SNR for each file,
+- write a `metadata.csv` and copy high-quality WAV files to `data/librispeech_subset/high_quality_audio/` (paths depend on notebook config).
 
-3. Evaluate results:
-```python
-python evaluate_results.py --enhanced "path/to/enhanced" --original "path/to/original"
-```
+2) Run enhancement scripts (if available in `src/enhancement/`) against the `high_quality_audio/` or other input directories.
 
-## Quality Metrics
-- PESQ: Target > 3.0 (Higher is better)
-- STOI: Target > 0.9 (Higher is better)
-- SNR: Target > 20dB (Higher is better)
+3) Evaluate results using the evaluation utilities (PESQ/STOI/SNR) in `src/evaluation/` or the notebook cells.
+
+## Quality Metrics (guidelines)
+- PESQ: higher is better; typical target > 3.0 for good perceptual quality (depends on content).
+- STOI: closer to 1.0 is better for intelligibility; target values depend on dataset and noise conditions.
+- SNR: higher dB indicates less noise; target depends on use-case (listenability may improve markedly above ~10–20 dB).
 
 ## Project Structure
 ```
 GaussBuster/
-├── data/
-│   ├── ESC-50-master/      # Original dataset
-│   └── ESC-50-processed/   # Processed files
+├── data/                        # Raw and prepared data (LibriSpeech/VoxCeleb subsets)
+│   └── librispeech_subset/
+│       ├── raw/
+│       └── high_quality_audio/
 ├── notebooks/
-│   └── prepare_voxceleb_dataset.ipynb
+│   └── prepare_metadata_dataset.ipynb
 ├── src/
-│   ├── enhancement/        # Enhancement algorithms
-│   ├── evaluation/         # Metrics calculation
-│   └── utils/             # Helper functions
-├── requirements.txt
-└── README.md
+
 ```
 
-## Future Work
-- Implement additional enhancement algorithms
-- Add real-time processing capabilities
-- Develop a web interface for audio enhancement
-- Support for longer audio files
-- Integration with other datasets
-
-## Acknowledgments
-- ESC-50 dataset creators
-- PESQ and STOI implementation authors
-- The audio processing community
+## Next steps & notes
+- If you want the README to include exact install pins, I can generate a `requirements.txt` from the notebook's pip installs.
+- If you have a preferred dataset (VoxCeleb vs LibriSpeech), tell me and I'll tailor the README and notebook docstrings to that choice.
 
 ## Contact
-- Project Link: [https://github.com/LeaMyl/GaussBuster](https://github.com/LeaMyl/GaussBuster)
+Project Link: https://github.com/LeaMyl/GaussBuster
