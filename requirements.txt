@@ -1,0 +1,7 @@
+pystoi
+pesq
+torchaudio
+librosa
+pandas
+tqdm
+soundfile
