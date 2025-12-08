@@ -70,5 +70,14 @@ GaussBuster/
 - If you want the README to include exact install pins, I can generate a `requirements.txt` from the notebook's pip installs.
 - If you have a preferred dataset (VoxCeleb vs LibriSpeech), tell me and I'll tailor the README and notebook docstrings to that choice.
 
+## License
+
+© 2025 Léa MIQUEU. All rights reserved.
+
+This project is provided for demonstration purposes only. 
+Any use of this code requires prior written permission.
+
+For inquiries: lea.miqueu@gmail.com
+
 ## Contact
 Project Link: https://github.com/LeaMyl/GaussBuster
