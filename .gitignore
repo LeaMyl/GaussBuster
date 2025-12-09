@@ -3,3 +3,4 @@ data/
 # ignore venv or virtual environment folders
 .venv/
 env/
+venv_clean/
